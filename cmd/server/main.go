@@ -6,6 +6,8 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/66james99/learn-pub-sub-starter/internal/pubsub"
+
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -18,6 +20,12 @@ func main() {
 	}
 	defer conn.Close()
 	fmt.Println("Peril game server connected to RabbitMQ!")
+
+	channel, err := conn.Channel()
+	if err != nil {
+		log.Fatalf("could not open RabbitMQ channel: %v", err)
+	}
+	defer channel.Close()
 
 	// wait for ctrl+c
 	signalChan := make(chan os.Signal, 1)
