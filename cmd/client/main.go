@@ -28,14 +28,14 @@ func main() {
 
 	username, err := gamelogic.ClientWelcome()
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("could not get username: %v", err)
 	}
-	_, _, err = pubsub.DeclareAndBind(conn, routing.ExchangePerilDirect, fmt.Sprint(routing.PauseKey,".",username), routing.PauseKey, pubsub.Transient)
+	_, queue, err := pubsub.DeclareAndBind(conn, routing.ExchangePerilDirect, routing.PauseKey+"."+username, routing.PauseKey, pubsub.Transient)
 	if err != nil {
-		log.Fatalf("could not declare and bind queue: %v", err)
+		log.Fatalf("could not subscribe to pause: %v", err)
 		return
 	}
+	fmt.Printf("Queue %v declared and bound!\n", queue.Name)
 
 
 		// wait for ctrl+c
