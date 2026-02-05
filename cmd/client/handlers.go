@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/66james99/learn-pub-sub-starter/internal/gamelogic"
 	"github.com/66james99/learn-pub-sub-starter/internal/routing"
@@ -88,6 +89,7 @@ func handlerWar(gs *gamelogic.GameState, publishCh *amqp.Channel) func(dw gamelo
 func publishGameLog(ch *amqp.Channel, message, username string) error {
 	return pubsub.PublishGob(ch, routing.ExchangePerilTopic, routing.GameLogSlug + "." + username, routing.GameLog{
 		Username:    username,
+		CurrentTime: time.Now(),
 		Message:     message,
 	})
 	
