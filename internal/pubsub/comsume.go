@@ -24,6 +24,7 @@ const (
 )
 
 
+
 func SubscribeJSON[T any](
 	conn *amqp.Connection,
 	exchange,
