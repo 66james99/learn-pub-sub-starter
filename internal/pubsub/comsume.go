@@ -32,7 +32,7 @@ func SubscribeJSON[T any](
 	queueType SimpleQueueType,
 	handler func(T) Acktype,
 ) error {
-	return subscribe[T](
+	return subscribe(
 		conn,
 		exchange,
 		queueName,
@@ -55,7 +55,7 @@ func SubscribeGob[T any](
 	queueType SimpleQueueType,
 	handler func(T) Acktype,
 ) error {
-	return subscribe[T](
+	return subscribe(
 		conn,
 		exchange,
 		queueName,
